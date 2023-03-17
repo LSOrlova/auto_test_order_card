@@ -8,22 +8,30 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class orderCardTest {
     private WebDriver driver;
 
     @BeforeAll
     static void setUpAll() {
-        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
+//        System.setProperty("webDriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
     void setUp() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
     }
 
     @AfterEach
@@ -33,8 +41,8 @@ class orderCardTest {
     }
 
     @Test
-    void shouldTestSomething() throws InterruptedException {
-        //throw new UnsupportedOperationException();
+    void shouldHappyPath() throws InterruptedException {
+//        throw new UnsupportedOperationException();
         driver.get("http://localhost:9999");
         List<WebElement> elements =
                 driver.findElements(By.className("input__control"));
